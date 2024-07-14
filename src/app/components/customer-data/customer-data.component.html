@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <div class="row mb-4 ">
+      <div class="col ">
+        <h1 class="fw-bold h1 mb-4 text-center ms-3">Customer Data Transaction</h1>
+        <h3 class="mb-3 h2">Use Filter Button to Filter The Table:</h3>
+      </div>
+      <div class="col-auto mt-5">
+        <div class="dropdown ">
+          <button (click)="hideChart()" class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-filter me-2"></i> Filter
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+            <li><button class="dropdown-item" (click)="showInput('Action 1');hideChart() "><i class="fa-solid fa-filter me-2"></i> Filter By Name</button></li>
+            <li><button class="dropdown-item" (click)="showInput('Action 2'); hideChart()"><i class="fa-solid fa-filter me-2"></i> Filter By Amount</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+   
+    <div class="input-container mb-3">
+        
+      <div *ngIf="selectedAction === 'Action 1'" class="input-group mb-3" >
+        <input  (input)="onFilterChange()" type="text" class="form-control" placeholder="Search by customer name" [(ngModel)]="filterCustomerName">
+        
+      </div>
+  
+      <div *ngIf="selectedAction === 'Action 2'" class="input-group mb-3">
+        <input (input)="onFilterChange()" type="number" class="form-control" placeholder="Search by transaction amount" [(ngModel)]="filterTransactionAmount">
+    
+      </div>
+    </div>
+  
+    <table class="table table-light">
+      <thead class="table-success">
+        <tr>
+        
+          <th class="text-center">Customer Name</th>
+          <th class="text-center">Transaction Date</th>
+          <th class="text-center">Transaction Amount</th>
+          <th class="text-center">Customer Chart</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of filteredTransactions; let i = index">
+    
+          
+          <td *ngIf="DisplayCustomerName(transaction.customer_id, i)" 
+              [attr.rowspan]="getRowSpan(transaction.customer_id, i)" 
+              class=" text-center align-middle">
+            {{ getCustomerName(transaction.customer_id) }}
+          </td>
+          
+          <td class="text-center align-middle">{{ transaction.date }}</td>
+          <td class="text-center align-middle">{{ transaction.amount }}</td>
+          
+          <td *ngIf="DisplayChartButton(transaction.customer_id, i)" 
+              [attr.rowspan]="getRowSpan(transaction.customer_id, i)" 
+              class="text-center">
+            <button class="btn btn-outline-success align-middle mt-2" 
+                    (click)="showChartData(getCustomerName(transaction.customer_id))">
+              <i class="fa-solid fa-chart-pie me-2"></i>Show Chart
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+  <div class="container d-flex justify-content-center align-items-center flex-column mt-2" >
+    <h2 class="text-center" *ngIf="showChart">Hover On Chart To Know Total Transaction Per Day For Selected Customer</h2>
+    <div class="chart-container mt-4 w-25">
+    
+      <canvas id="myChart" width="100" height="100" class="align-middle" ></canvas>
+    </div>
+  </div>
+  
+  </div>

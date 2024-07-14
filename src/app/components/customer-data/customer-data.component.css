@@ -1,0 +1,37 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #807a7a;
+    background-color: #588A87;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-right: 1px solid #588A87
+  }
+
+  th {
+    color:white;
+    background-color: #588A87
+  }  
+
+  .row-color
+  {
+    background-color:#E4E4E4;
+    color:#E4E4E4
+  }
+
+  .input-container {
+    margin-top: 10px;
+  }
+  
+  .input-group {
+    max-width: 500px;
+  }
+  
+ .table th, .table td {
+  border: 1px solid black; 
+  padding: 12px; 
+  text-align: center; 
+}
