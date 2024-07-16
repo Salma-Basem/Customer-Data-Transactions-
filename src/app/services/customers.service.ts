@@ -13,6 +13,6 @@ export class CustomersService {
 
   getCustomersData():Observable<any>
   {
-   return  this._HttpClient.get('http://localhost:3000/customers')
+   return  this._HttpClient.get('https://salma-basem.github.io/host_API/db.json')
   }
 }

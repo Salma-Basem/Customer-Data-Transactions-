@@ -38,14 +38,14 @@ export class CustomerDataComponent {
 
   getCustomers() {
     this._CustomersService.getCustomersData().subscribe({
-      next:(response) => {this.customers = response;},
+      next:(response) => {this.customers = response.customers;},
       error:(error) => {console.log(error);}
     });
   }
 
   getTransactions() {
-    this._TranscationsService.getTransactionsData().subscribe({next:(response) => {this.transactions = response;
-      this.transactions = response.sort((a: { customer_id: any; }, b: { customer_id: any; }) => {
+    this._TranscationsService.getTransactionsData().subscribe({next:(response) => {this.transactions = response.transactions;
+      this.transactions = response.transactions.sort((a: { customer_id: any; }, b: { customer_id: any; }) => {
         const idA = Number(a.customer_id);
         const idB = Number(b.customer_id); 
         return idA - idB; 
@@ -201,4 +201,3 @@ export class CustomerDataComponent {
   }
 
 }
-

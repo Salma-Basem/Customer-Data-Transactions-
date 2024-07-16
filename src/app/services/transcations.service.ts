@@ -12,6 +12,6 @@ export class TranscationsService {
 
   getTransactionsData():Observable<any>
   {
-   return  this._HttpClient.get('http://localhost:3000/transactions')
+   return  this._HttpClient.get('https://salma-basem.github.io/host_API/db.json')
   }
 }
