@@ -15,16 +15,16 @@ export class CustomerDataComponent {
   customers: ICustomers[] = [];
   transactions: ITransactions[] = [];
   filterCustomerName: string = '';
-  filterTransactionAmount: number = 0;
+ 
   selectedCustomerId: number | undefined;
   customerName: string = '';
   selectedCustomerName: string = '';  
   private chart: Chart | null = null;
   userInput2: string = '';
   selectedAction: string | null = null;
-
+  showFilteredResults: boolean = false;
   showChart: boolean = false;
-
+  filterTransactionAmount: string = '';
   constructor(
     private _CustomersService: CustomersService,
     private _TranscationsService: TranscationsService
@@ -63,9 +63,13 @@ export class CustomerDataComponent {
   get filteredTransactions(): ITransactions[] {
     return this.transactions.filter(transaction => {
       let customerName = this.getCustomerName(transaction.customer_id);
+      const amountMatches = this.filterTransactionAmount 
+        ? transaction.amount.toString().startsWith(this.filterTransactionAmount) 
+        : true; 
+
       return (
         customerName.toLowerCase().includes(this.filterCustomerName.toLowerCase()) &&
-        (this.filterTransactionAmount === 0 || transaction.amount >= this.filterTransactionAmount)
+        amountMatches
       );
     });
   }
@@ -159,16 +163,15 @@ export class CustomerDataComponent {
     }
   }
   
-  resetFilters() {
-  
-    this.filterCustomerName = '';
-    this.filterTransactionAmount = 0;
-  }
-  
   onFilterChange() {
-    this.showChart = false; 
+    this.showFilteredResults = this.filterTransactionAmount !== '' || this.filterCustomerName.trim() !== '';
   }
-  
+
+  resetFilters() {
+    this.filterCustomerName = '';
+    this.filterTransactionAmount = '';
+    this.showFilteredResults = false;
+  }
 
 
   DisplayCustomerName(customerId: number, index: number): boolean {
@@ -201,3 +204,4 @@ export class CustomerDataComponent {
   }
 
 }
+
